@@ -6,10 +6,10 @@
         {
             get;
             //{
-                //Random gen = new Random();
-                //DateTime start = new DateTime(1995, 1, 1);
-                //int range = (DateTime.Today - start).Days;
-                //return start.AddDays(gen.Next(range));
+            //    Random gen = new Random();
+            //    DateTime start = new DateTime(1995, 1, 1);
+            //    int range = (DateTime.Today - start).Days;
+            //    return start.AddDays(gen.Next(range));
             //}
             set;
         }
@@ -74,16 +74,16 @@
         }
         public int? Idade
         {
-            get;
-            //{
-            //    int Idade = DateTime.Now.Year - DataNascimento.Year;
-            //    if (DateTime.Now.DayOfYear < DataNascimento.DayOfYear)
-            //    {
-            //        Idade--;
-            //    }
-            //    return Idade;
-            //}
-            set;
+            get
+            {
+                int Idade = DateTime.Now.Year - DataNascimento.Year;
+                if (DateTime.Now.DayOfYear < DataNascimento.DayOfYear)
+                {
+                    Idade--;
+                }
+                return Idade;
+            }
+            set { }
         }
     }
 }

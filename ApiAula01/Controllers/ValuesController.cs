@@ -36,18 +36,17 @@ namespace ApiAula01.Controllers
             {
                 DataNascimento = Convert.ToDateTime(dates[index+aoooba]),
                 Nome = Nomes[Random.Shared.Next(Nomes.Length)],
-                Idade = CalcularIdade(index),
+                //Idade = CalcularIdade(index),
                 Cpf = CPFs[Random.Shared.Next(CPFs.Length)]
-
             }).ToList();
         }
 
-        private int? CalcularIdade(int index)
-        {
-            var agora = Convert.ToInt32(DateTime.Now.Year);
-            var nasc = Convert.ToInt32(DateTime.Parse(dates[index + aoooba]).Year);
-            return agora - nasc;
-        }
+        //private int? CalcularIdade(int index)
+        //{
+        //    var agora = Convert.ToInt32(DateTime.Now.Year);
+        //    var nasc = Convert.ToInt32(DateTime.Parse(dates[index + aoooba]).Year);
+        //    return agora - nasc;
+        //}
 
         [HttpGet]
         public List<Cadastro> Get()
