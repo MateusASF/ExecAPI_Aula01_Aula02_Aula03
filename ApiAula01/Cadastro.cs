@@ -2,23 +2,24 @@
 {
     public class Cadastro
     {
-        public DateTime DataNascimento { get; set;}
+        public DateTime DataNascimento { get; }
 
         public string? Nome { get; set; }
-        public string? Cpf { get; set;}
-        public int? Idade
+        public string? Cpf { get; set; }
+        public int? Idade => CalucularIdade();
+
+        public int CalucularIdade()
         {
-            get
+            int Idade = DateTime.Now.Year - DataNascimento.Year;
+            if (DateTime.Now.DayOfYear < DataNascimento.DayOfYear)
             {
-                int Idade = DateTime.Now.Year - DataNascimento.Year;
-                if (DateTime.Now.DayOfYear < DataNascimento.DayOfYear)
-                {
-                    Idade--;
-                }
-                return Idade;
+                Idade--;
             }
-            set { }
+            return Idade;
         }
+
+
     }
+}
 }
 
