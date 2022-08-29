@@ -7,8 +7,9 @@ namespace ApiAula01.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
-        static Random random = new Random();
-        int aoooba = random.Next(0, 4);
+        //static Random random = new Random();
+        //int aoooba = random.Next(0, 4);
+        public List<Cadastro> pessoas { get; set; }
 
         private static readonly string[] Nomes = new[]
         {
@@ -28,16 +29,14 @@ namespace ApiAula01.Controllers
         //             "13/04/1987", "30/01/2001", "27/02/1999", "14/06/1972", "17/10/1950"
         //};
 
-        public List<Cadastro> pessoas { get; set; }
-
         public ValuesController()
         {
-            pessoas = Enumerable.Range(0, 5).Select(index => new Cadastro
+            pessoas = Enumerable.Range(1, 5).Select(index => new Cadastro
             {
-                DataNascimento = DataRamdom(),//Convert.ToDateTime(dates[index + aoooba]),
+                DataNascimento = DateRandom(),//Convert.ToDateTime(dates[index + aoooba]),
                 Nome = Nomes[Random.Shared.Next(Nomes.Length)],
                 //Idade = CalcularIdade(index),
-                Cpf = CPFRandom(), //CPFs[Random.Shared.Next(CPFs.Length)]
+                Cpf = CpfRandom(), //CPFs[Random.Shared.Next(CPFs.Length)]
             }).ToList();
         }
 
@@ -48,7 +47,7 @@ namespace ApiAula01.Controllers
         //    return agora - nasc;
         //}
 
-        private DateTime DataRamdom()
+        private DateTime DateRandom()
         {
             Random gen = new Random();
             DateTime start = new DateTime(1900, 1, 1);
@@ -56,7 +55,7 @@ namespace ApiAula01.Controllers
             return start.AddDays(gen.Next(range));
         }
 
-        private string CPFRandom()
+        private string CpfRandom()
         {
             var random = new Random();
 
