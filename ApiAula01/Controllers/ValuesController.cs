@@ -11,21 +11,21 @@ namespace ApiAula01.Controllers
         int aoooba = random.Next(0, 4);
 
         private static readonly string[] Nomes = new[]
-{
+        {
         "Mario", "João", "Julia", "Cristina", "Maria", "Kleber", "Paulo", "Amanda", "Sabrina", "Daniel"
         };
 
         private static readonly string[] CPFs = new[]
-{
+        {
         "132.456.789-85", "784.231.156-78", "457.546.741-45", "515.443.467-60", "183.364.531-64",
             "001.861.937-18", "486.854.367-96", "775.456.346-08", "050.672.598-76", "672.592.447-63"
         };
 
 
         private static readonly string[] dates = new[]
-{
-        "12/04/2003", "20/05/2000", "12/04/2006", "25/09/1990", "01/12/2007",
-             "13/04/1987", "30/01/2001", "27/02/1999", "14/06/1972", "17/10/1950"
+        {
+                "12/04/2003", "20/05/2000", "12/04/2006", "25/09/1990", "01/12/2007",
+                     "13/04/1987", "30/01/2001", "27/02/1999", "14/06/1972", "17/10/1950"
         };
 
         public List<Cadastro> pessoas { get; set; }
@@ -45,7 +45,7 @@ namespace ApiAula01.Controllers
         private int? CalcularIdade(int index)
         {
             var agora = Convert.ToInt32(DateTime.Now.Year);
-            var nasc = Convert.ToInt32(DateTime.Parse(dates[index+aoooba]).Year);
+            var nasc = Convert.ToInt32(DateTime.Parse(dates[index + aoooba]).Year);
             return agora - nasc;
         }
 
