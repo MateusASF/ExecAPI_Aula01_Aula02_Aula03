@@ -3,8 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ApiAula01.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
+    [Consumes("application/json")] // -> limita a entrada
+    [Produces("application/json")] // -> limita a saida
     public class ValuesController : ControllerBase
     {
         public List<Cadastro> pessoas { get; set; }
@@ -86,31 +88,102 @@ namespace ApiAula01.Controllers
             return semente;
         }
 
-        [HttpGet]
-        public List<Cadastro> Get()
+        //GET
+        //[HttpGet("Get_Simples")]
+        //public List<Cadastro> Get()
+        //{
+        //    return pessoas;
+        //}
+
+        [HttpGet("Get_Interface_IActionResult/{index}/consultar")]//*
+        public IActionResult GetAction1() //aqui não estou tipando estou apenas usando a interface,  *QUANDO NÃO RETORNAR NADA PROCURAR USAR INTERFACE, QUANDO RETORNAR PROCUAR USAR TIPADO
         {
-            return pessoas;
+            return Ok(pessoas);
         }
 
-        [HttpPost]
-        public Cadastro Post(Cadastro pessoa)
+        //[HttpGet("Get_Action_Result")]
+        //[ProducesResponseType(StatusCodes.Status200OK)]
+        //public ActionResult<List<Cadastro>> GetAction2(int index) //aqui eu tipo meu retonro dizendo q é um objeto, Dar preferência pra este modelo devido interface se mt genérica
+        //{
+        //    return Ok(pessoas);
+        //}
+
+        //*
+        //[FromQuery] => parâmetros simples como int, string, etc; esse é o dafault do ApiController, logo não é necessário reforçar
+        //[FromRote] -> [HttpPost("Post_Simples")] => aqui eu passo o nome "Post Simples" pela rota, para passsar valores no index colocamos a variável entre chaves ex: [HttpPost("Post_Simples/{index}")]
+        //geralmente usa-se palavras simples e verbos para indicar o que está acontecendo
+        //[FromQuery] -> quando não for rta ou query
+
+
+        //POST
+        //[HttpPost("Post_Simples")]
+        //public Cadastro Post(Cadastro pessoa)
+        //{
+        //    pessoas.Add(pessoa);
+        //    return pessoa;
+        //}
+
+        [HttpPost("Post_ActionResult/{index}/inserir")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public ActionResult<Cadastro> PostAction([FromBody] Cadastro pessoa) 
         {
+            //if (!ModelState.IsValid) //esse cara faz as validações do Cadastro na hora de dar o Post
+            //{
+            //    return BadRequest();
+            //}
             pessoas.Add(pessoa);
-            return pessoa;
+            return CreatedAtAction(nameof(PostAction), pessoa);
+            //return StatusCode(501, pessoa); => Status code retorna qualquer cód pode ser com objeto ou não
         }
 
-        [HttpPut]
-        public List<Cadastro> Put(int index, Cadastro pessoa)
+
+        //PUT
+        //[HttpPut("Put_simples")]
+        //public List<Cadastro> Put(int index, Cadastro pessoa)
+        //{
+        //    pessoas[index] = pessoa;
+        //    return pessoas;
+        //}
+
+        //[HttpPut("Post_Interface_IActionResult")]
+        //[ProducesResponseType(StatusCodes.Status204NoContent)]
+        //public IActionResult PutAction(int index, Cadastro pessoa)
+        //{
+        //    pessoas[index] = pessoa;
+        //    return NoContent();
+        //}
+
+        [HttpPut("Post_Interface_ActionResult_Melhorado/{index}/editar")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult PutAction2(int index, Cadastro pessoa)
         {
             pessoas[index] = pessoa;
-            return pessoas;
+            return NoContent();
         }
 
-        [HttpDelete]
-        public List<Cadastro> Deletar(int index)
+
+        //DELETE
+        //[HttpDelete("Delete_simples")]
+        //public List<Cadastro> Deletar(int index)
+        //{
+        //    pessoas.RemoveAt(index);
+        //    return pessoas.ToList();
+        //}
+
+        [HttpDelete("Delete_Interface_IActionResult/{index}/deletar")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public IActionResult DeletarAction(int index)
         {
+            if(index > 4) // pouco provavél o uso
+            {
+                return NotFound();
+            }
+            //var teste = Request.Headers;
             pessoas.RemoveAt(index);
-            return pessoas.ToList();
+            return Ok();
         }
 
     }
