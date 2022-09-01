@@ -2,19 +2,26 @@
 
 namespace ApiAula01
 {
-    public class Cadastro
+    public class Cliente
     {
+        public long Id { get; set; }
+
+
         [Required(ErrorMessage = "Data é obrigatório")]
         public DateTime? DataNascimento { get; set; } 
 
+
         public string? Nome { get; set; }
 
-        [Required] //obriga que o cpf seja obrigatório
-        [MaxLength(11, ErrorMessage = "Cpf é só 11 caracteres locão")]
+
+        [Required(ErrorMessage = "CPF é obrigatório")]
+        [StringLength(11, MinimumLength = 11, ErrorMessage = "O CPF deve conter 11 números, sem pontuação")]
         public string? Cpf { get; set; }
 
-        [Range(18, 60, ErrorMessage = "Só 18 fi")] //para delimitar
+
+        [Range(18,int.MaxValue, ErrorMessage = "Você deve ter no minimo 18 anos.")]
         public int? Idade => CalucularIdade(); 
+
 
         public int CalucularIdade()
         {
@@ -25,8 +32,6 @@ namespace ApiAula01
             }
             return Idade;
         }
-
-
     }
 }
 
