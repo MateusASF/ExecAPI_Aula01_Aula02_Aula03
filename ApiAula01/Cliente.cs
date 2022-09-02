@@ -20,12 +20,12 @@ namespace ApiAula01
 
 
         [Range(18,int.MaxValue, ErrorMessage = "Você deve ter no minimo 18 anos.")]
-        public int? Idade => CalucularIdade(); 
+        public int Idade => CalucularIdade(); 
 
 
         public int CalucularIdade()
         {
-            int Idade = DateTime.Now.Year - ((DateTime)DataNascimento).Year;
+            int Idade = DateTime.Now.Year - ((DateTime)DataNascimento!).Year;
             if (DateTime.Now.DayOfYear < ((DateTime)DataNascimento).DayOfYear)
             {
                 Idade--;
