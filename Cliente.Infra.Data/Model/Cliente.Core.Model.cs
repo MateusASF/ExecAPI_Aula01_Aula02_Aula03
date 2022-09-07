@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ApiAula01
+namespace Cliente.Core.Model
 {
-    public class Cliente
+    public class Clientes
     {
         public long Id { get; set; }
 
