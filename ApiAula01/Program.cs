@@ -16,10 +16,12 @@ builder.Services.AddControllers().ConfigureApiBehaviorOptions(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+//interfaces
 builder.Services.AddScoped<IClienteRepository, ClienteRepository>();
 builder.Services.AddScoped<IClienteService, ClienteService>();
 
-
+//filters
+builder.Services.AddMvc(options => options.Filters.Add<GeneralExceptionFilter>()); // => Global Filter
 builder.Services.AddScoped<LogActionFilterCpfExiste>();
 builder.Services.AddScoped<LogActionFilterCpfNaBase>();
 
