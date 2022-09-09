@@ -25,13 +25,13 @@ namespace Cliente.Core.Service
         {
             return _clieteRepository.GetClienteCpf(cpf);
         }
-        public bool PostCliente(string cpf, Clientes cliente)
+        public bool PostCliente(Clientes cliente)
         {
-            return _clieteRepository.PostCliente(cpf, cliente);
+            return _clieteRepository.PostCliente(cliente);
         }
-        public bool PutCliente(string cpf, Clientes cliente)
+        public bool PutCliente(Clientes cliente)
         {
-            return _clieteRepository.PutCliente(cpf, cliente);
+            return _clieteRepository.PutCliente(cliente);
         }
         public bool DeleteCliente(string cpf)
         {

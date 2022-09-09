@@ -52,10 +52,10 @@ namespace ApiAula01.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ServiceFilter(typeof(LogActionFilterCpfNaBase))]
-        public ActionResult<Clientes> PostCliente(string cpf, Clientes cliente)
+        [ServiceFilter(typeof(LogActionFilterCpfExiste))]
+        public ActionResult<Clientes> PostCliente(Clientes cliente)
         {
-            if (!_clienteService.PostCliente(cpf, cliente))
+            if (!_clienteService.PostCliente(cliente))
             {
                 return BadRequest();
             }
@@ -70,9 +70,9 @@ namespace ApiAula01.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ServiceFilter(typeof(LogActionFilterCpfExiste))]
-        public IActionResult PutCliente(string cpf, Clientes cliente)
+        public IActionResult PutCliente(Clientes cliente)
         {
-            if (!_clienteService.PutCliente(cpf, cliente))
+            if (!_clienteService.PutCliente(cliente))
             {
                 return new StatusCodeResult(StatusCodes.Status500InternalServerError);
             }

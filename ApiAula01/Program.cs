@@ -23,11 +23,9 @@ builder.Services.AddScoped<IClienteService, ClienteService>();
 //filters
 builder.Services.AddMvc(options => options.Filters.Add<GeneralExceptionFilter>()); // => Global Filter
 builder.Services.AddScoped<LogActionFilterCpfExiste>();
-builder.Services.AddScoped<LogActionFilterCpfNaBase>();
 
 
 var app = builder.Build();
-
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

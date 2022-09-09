@@ -42,7 +42,7 @@ namespace ApiAula01.Repository
         #endregion
 
         #region POST / INSERT
-        public bool PostCliente(string cpf, Clientes cliente)
+        public bool PostCliente(Clientes cliente)
         {
             var query = "INSERT INTO clientes VALUES (@cpf, @nome, @dataNascimento, @idade)";
             DynamicParameters parameters = new(new { cliente.Cpf, cliente.Idade, cliente.Nome, cliente.DataNascimento });
@@ -52,12 +52,11 @@ namespace ApiAula01.Repository
         #endregion
 
         #region PUT / UPDATE
-        public bool PutCliente(string cpf, Clientes cliente)
+        public bool PutCliente(Clientes cliente)
         {
             var query = @"UPDATE clientes SET nome = @nome,
                           dataNascimento = @dataNascimento
                           WHERE clientes.cpf = @cpf";
-            cliente.Cpf = cpf;
             DynamicParameters parameters = new(cliente);
             using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
             return conn.Execute(query, parameters) == 1;

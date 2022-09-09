@@ -1,6 +1,8 @@
 ﻿using Cliente.Core.Interface;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc;
+using System.Text;
+using Cliente.Core.Model;
 
 namespace ApiAula01.Filters
 {
@@ -13,14 +15,35 @@ namespace ApiAula01.Filters
             _clienteService = clienteService;
         }
 
-        public override void OnActionExecuting(ActionExecutingContext context)
-        {
-            string cpfCliente = (string)context.ActionArguments["cpf"];
+        //public static async Task<string> FormatRequestBody(HttpRequest request)
+        //{
+            //request.EnableRewind();
 
-            if (_clienteService.GetClienteCpf(cpfCliente) == null)
+         //   var buffer = new byte[Convert.ToInt32(request.ContentLength)];
+       // }
+
+        public override async void OnActionExecuting(ActionExecutingContext context)
+        {
+            //StringBuilder sb = new StringBuilder();
+            //foreach (var arg in context.ActionArguments)
+            //{
+            //    sb.Append(arg.Key.ToString() + ":" + System.Text.Json.JsonSerializer.Serialize(arg.Value) + "\n");
+            //}
+            //var conteudo = sb.ToString();
+
+            var teste = context.ActionArguments["cliente"] as Clientes;
+
+            if (!HttpMethods.IsPost(context.HttpContext.Request.Method) &&
+                _clienteService.GetClienteCpf(teste.Cpf) == null)
             {
-                context.Result = new StatusCodeResult(StatusCodes.Status400BadRequest);
+                context.Result = new StatusCodeResult(StatusCodes.Status409Conflict);
             }
+            else if (HttpMethods.IsPost(context.HttpContext.Request.Method) &&
+                _clienteService.GetClienteCpf(teste.Cpf) != null)
+            {
+                context.Result = new StatusCodeResult(StatusCodes.Status409Conflict);
+            }
+
         }
     }
 }
