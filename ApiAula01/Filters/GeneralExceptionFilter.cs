@@ -21,12 +21,14 @@ namespace ApiAula01.Filters
             {
                 case SqlException:
                     context.HttpContext.Response.StatusCode = StatusCodes.Status503ServiceUnavailable;
+                    problem.Status = 503;
                     problem.Title = "Erro inesperado ao se comunicar com o banco de dados";
                     problem.Detail = "Falha não reconhecida ao se conectar com o Banco de Dados";
                     context.Result = new ObjectResult(problem);
                     break;
                 case NullReferenceException:
                     context.HttpContext.Response.StatusCode = StatusCodes.Status417ExpectationFailed;
+                    problem.Status = 417;
                     problem.Title = "Erro inesperado no sistema";
                     problem.Detail = "Falha não reconhecida no sistema";
                     context.Result = new ObjectResult(problem);
