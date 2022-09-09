@@ -16,7 +16,6 @@ namespace ApiAula01.Filters
                 Type = context.Exception.GetType().Name
             };
 
-            Console.WriteLine($"Tipo da exceção {context.Exception.GetType().Name}, mensagem {context.Exception.Message}, stack trace {context.Exception.StackTrace}");
 
             switch (context.Exception)
             {
@@ -24,14 +23,12 @@ namespace ApiAula01.Filters
                     context.HttpContext.Response.StatusCode = StatusCodes.Status503ServiceUnavailable;
                     problem.Title = "Erro inesperado ao se comunicar com o banco de dados";
                     problem.Detail = "Falha não reconhecida ao se conectar com o Banco de Dados";
-                    problem.Type = context.Exception.GetType().Name;
                     context.Result = new ObjectResult(problem);
                     break;
                 case NullReferenceException:
                     context.HttpContext.Response.StatusCode = StatusCodes.Status417ExpectationFailed;
                     problem.Title = "Erro inesperado no sistema";
                     problem.Detail = "Falha não reconhecida no sistema";
-                    problem.Type = context.Exception.GetType().Name;
                     context.Result = new ObjectResult(problem);
                     break;
                 default:
@@ -39,6 +36,9 @@ namespace ApiAula01.Filters
                     context.Result = new ObjectResult(problem);
                     break;
             }
+
+            Console.WriteLine($"Tipo da exceção {context.Exception.GetType().Name}, mensagem {context.Exception.Message}, stack trace {context.Exception.StackTrace}");
+
         }
     }
 }

@@ -21,7 +21,8 @@ builder.Services.AddScoped<IClienteRepository, ClienteRepository>();
 builder.Services.AddScoped<IClienteService, ClienteService>();
 
 //filters
-builder.Services.AddMvc(options => options.Filters.Add<GeneralExceptionFilter>()); // => Global Filter
+builder.Services.AddMvc(options => { options.Filters.Add<GeneralExceptionFilter>(); 
+                                     options.Filters.Add<LogActionFilterCpfExiste>(); });; // => Global Filter
 builder.Services.AddScoped<LogActionFilterCpfExiste>();
 
 

@@ -29,9 +29,9 @@ namespace Cliente.Core.Service
         {
             return _clieteRepository.PostCliente(cliente);
         }
-        public bool PutCliente(Clientes cliente)
+        public bool PutCliente(string cpf, Clientes cliente)
         {
-            return _clieteRepository.PutCliente(cliente);
+            return _clieteRepository.PutCliente(cpf, cliente);
         }
         public bool DeleteCliente(string cpf)
         {

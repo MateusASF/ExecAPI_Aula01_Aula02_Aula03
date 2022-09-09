@@ -15,28 +15,19 @@ namespace ApiAula01.Filters
             _clienteService = clienteService;
         }
 
-        //public static async Task<string> FormatRequestBody(HttpRequest request)
-        //{
-            //request.EnableRewind();
-
-         //   var buffer = new byte[Convert.ToInt32(request.ContentLength)];
-       // }
-
         public override async void OnActionExecuting(ActionExecutingContext context)
         {
-            //StringBuilder sb = new StringBuilder();
-            //foreach (var arg in context.ActionArguments)
-            //{
-            //    sb.Append(arg.Key.ToString() + ":" + System.Text.Json.JsonSerializer.Serialize(arg.Value) + "\n");
-            //}
-            //var conteudo = sb.ToString();
+            if (HttpMethods.IsDelete(context.HttpContext.Request.Method) || HttpMethods.IsGet(context.HttpContext.Request.Method))
+            {
+                return;
+            }
 
             var teste = context.ActionArguments["cliente"] as Clientes;
 
-            if (!HttpMethods.IsPost(context.HttpContext.Request.Method) &&
+            if (HttpMethods.IsPut(context.HttpContext.Request.Method) &&
                 _clienteService.GetClienteCpf(teste.Cpf) == null)
             {
-                context.Result = new StatusCodeResult(StatusCodes.Status409Conflict);
+                context.Result = new StatusCodeResult(StatusCodes.Status400BadRequest);
             }
             else if (HttpMethods.IsPost(context.HttpContext.Request.Method) &&
                 _clienteService.GetClienteCpf(teste.Cpf) != null)

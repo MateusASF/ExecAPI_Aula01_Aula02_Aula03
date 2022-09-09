@@ -10,6 +10,8 @@ namespace ApiAula01.Controllers
     [Consumes("application/json")] // -> limita a entrada
     [Produces("application/json")] // -> limita a saida
     [TypeFilter(typeof(LogResourceFilterTimer))]
+
+    //[TypeFilter(typeof(GeneralExceptionFilter))]
     public class ValuesController : ControllerBase
     {
         public IClienteService _clienteService;
@@ -52,7 +54,6 @@ namespace ApiAula01.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ServiceFilter(typeof(LogActionFilterCpfExiste))]
         public ActionResult<Clientes> PostCliente(Clientes cliente)
         {
             if (!_clienteService.PostCliente(cliente))
@@ -69,10 +70,9 @@ namespace ApiAula01.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [ServiceFilter(typeof(LogActionFilterCpfExiste))]
-        public IActionResult PutCliente(Clientes cliente)
+        public IActionResult PutCliente(string cpf, Clientes cliente)
         {
-            if (!_clienteService.PutCliente(cliente))
+            if (!_clienteService.PutCliente(cpf, cliente))
             {
                 return new StatusCodeResult(StatusCodes.Status500InternalServerError);
             }
@@ -86,7 +86,6 @@ namespace ApiAula01.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        //[ServiceFilter(typeof(LogActionFilterCpfExiste))]
         public ActionResult<List<Clientes>> DeleteCliente(string cpf)
         {
             if (!_clienteService.DeleteCliente(cpf))
@@ -102,7 +101,6 @@ namespace ApiAula01.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        //[ServiceFilter(typeof(LogActionFilterCpfExiste))]
         public ActionResult<List<Clientes>> DeleteClienteId(long id)
         {
             if (!_clienteService.DeleteClienteId(id))
